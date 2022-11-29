@@ -1,11 +1,25 @@
 {
   "name": "cs5610-final-project-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "cs5610 final project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raoqiange/cs5610-final-project-node.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "bugs": {
+    "url": "https://github.com/raoqiange/cs5610-final-project-node/issues"
+  },
+  "homepage": "https://github.com/raoqiange/cs5610-final-project-node#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
