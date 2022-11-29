@@ -10,7 +10,7 @@ const findCollectionByCollectionId = async (req, res) => {
 }
 
 //url = '/api/collections' method:get
-const findCollectionByFanUsername = async (req, res) => {
+const findCollectionsByFanUsername = async (req, res) => {
     // console.log(req.query)
     // const {fan_username} = req.query;
     // console.log(fan_username)
@@ -44,7 +44,7 @@ const deleteCollection = async (req, res) => {
 
 export default (app) => {
     app.get('/api/collections/:collectionId', findCollectionByCollectionId);
-    app.get('/api/collections', findCollectionByFanUsername)
+    app.get('/api/collections', findCollectionsByFanUsername)
     app.post('/api/collections', createCollection);
     app.put('/api/collections/:collectionId', updateCollection);
     app.delete('/api/collections/:collectionId', deleteCollection);
