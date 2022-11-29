@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from "mongoose";
-// const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/final-project';
+import AnimeController
+    from "./controllers/anime/anime-controller.js";
+
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/final-project-5610';
 mongoose.connect(CONNECTION_STRING);
 
-// import AnimeController
-//     from "./controllers/anime-controller.js";
+
 // import FanController
 //     from "./controllers/users/fan-controller.js";
 // import AdminController
@@ -16,7 +18,8 @@ mongoose.connect(CONNECTION_STRING);
 const app = express();
 app.use(cors());
 app.use(express.json());
+AnimeController(app);
 // HelloController(app);
 // UserController(app);
 // TuitsController(app);
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000, () => console.log('app is listening...'));
