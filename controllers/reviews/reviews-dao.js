@@ -1,5 +1,7 @@
 import reviewsModel from "./reviews-model.js";
 
+export const findReviewByReviewId = (reviewId) => reviewsModel.findById(reviewId);
+
 export const findReviewsByAnimeId = (animeId) => reviewsModel.find({anime_id: animeId});
 
 export const findReviewsByUsername = (username) => reviewsModel.find({username});
