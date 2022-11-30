@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 import AnimeController
     from "./controllers/anime/anime-controller.js";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import CollectionsController from "./controllers/collections/collections-controller.js";
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 import ReviewsController from "./controllers/reviews/reviews-controller.js";
