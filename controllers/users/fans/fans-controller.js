@@ -15,7 +15,7 @@ const findFans = async (req, res) => {
 
 // url = '/api/fans' method:post
 const createFan = async (req, res) => {
-    //newForumAuthor's username, password, and forum_limitations
+    //fan's username, password, and favorite_genre
     // needed to be transferred from the front-end
     const newFan= req.body;
     const insertedFan= await FansDao.createFan(newFan);
