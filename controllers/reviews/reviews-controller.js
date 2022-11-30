@@ -7,6 +7,12 @@ const findReviewsByAnimeId = async (req, res) => {
     res.json(reviews);
 }
 
+const findReviewsByUsername = async (req, res) => {
+    const {username} = req.query;
+    const reviews = await reviewsDao.findReviewsByUsername(username);
+    res.json(reviews);
+}
+
 //url = '/api/anime/:animeId/reviews'
 const createReview = async (req, res) => {
     const {animeId} = req.params;
@@ -33,7 +39,8 @@ const deleteReview = async (req, res) => {
 
 export default (app) => {
     app.get('/api/anime/:animeId/reviews', findReviewsByAnimeId);
+    app.get('/api/reviews', findReviewsByUsername);
     app.post('/api/anime/:animeId/reviews', createReview);
-    app.put('/api/anime/:animeId/reviews/:reviewId', updateReview);
-    app.delete('/api/anime/:animeId/reviews/:reviewId', deleteReview);
+    app.put('/api/reviews/:reviewId', updateReview);
+    app.delete('/api/reviews/:reviewId', deleteReview);
 }
