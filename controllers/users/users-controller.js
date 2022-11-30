@@ -12,6 +12,21 @@ const findUsers = async (req, res) => {
     res.json(users);
 }
 
+const findAdmins = async (req, res) => {
+    const admins = await usersDao.findAdmins();
+    res.json(admins);
+}
+
+const findFans = async (req, res) => {
+    const fans = await usersDao.findFans();
+    res.json(fans);
+}
+
+const findForumAuthors = async (req, res) => {
+    const forumAuthors = await usersDao.findForumAuthors();
+    res.json(forumAuthors);
+}
+
 // url = '/api/users' method:post
 const createUser = async (req, res) => {
     const newUser= req.body;
@@ -78,6 +93,10 @@ export default (app) => {
     app.get('/api/users', findUsers)
     app.put('/api/users/:UserId', updateUser);
     app.delete('/api/users/:UserId', deleteUserByUserId);
+
+    app.get('/api/admins', findAdmins);
+    app.get('/api/fans', findFans);
+    app.get('/api/forum_authors', findForumAuthors);
 
     app.post('/api/register', register);
     app.post('/api/login', login);
