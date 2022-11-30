@@ -3,7 +3,10 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import AnimeController
     from "./controllers/anime/anime-controller.js";
+<<<<<<< Updated upstream
 import CollectionsController from "./controllers/collections/collections-controller.js";
+=======
+>>>>>>> Stashed changes
 import ReviewsController from "./controllers/reviews/reviews-controller.js";
 
 const CONNECTION_STRING = 'mongodb://localhost:27017/final-project-5610';
