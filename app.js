@@ -10,6 +10,8 @@ import RecentInteractedAnimeController
     from "./controllers/anime/recentInteractedAnime/recent-interacted-anime-controller.js";
 import UsersController from "./controllers/users/users-controller.js";
 
+import ForumPostsController from "./controllers/forum-posts/forum-posts-controller.js";
+import ForumCommentsController from "./controllers/forum-comments/forum-comments-controller.js";
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -40,4 +42,6 @@ CollectionsController(app);
 ReviewsController(app);
 RecentInteractedAnimeController(app);
 UsersController(app);
+ForumPostsController(app);
+ForumCommentsController(app);
 app.listen(process.env.PORT || 4000, () => console.log('app is listening...'));
