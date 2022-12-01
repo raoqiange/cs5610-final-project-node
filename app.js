@@ -9,6 +9,7 @@ import ReviewsController from "./controllers/reviews/reviews-controller.js";
 import RecentInteractedAnimeController
     from "./controllers/anime/recentInteractedAnime/recent-interacted-anime-controller.js";
 import UsersController from "./controllers/users/users-controller.js";
+import CollectedAnimeController from "./controllers/collectedAnime/collected-anime-controller.js";
 
 const options = {
     useNewUrlParser: true,
@@ -40,4 +41,5 @@ CollectionsController(app);
 ReviewsController(app);
 RecentInteractedAnimeController(app);
 UsersController(app);
+CollectedAnimeController(app);
 app.listen(process.env.PORT || 4000, () => console.log('app is listening...'));
