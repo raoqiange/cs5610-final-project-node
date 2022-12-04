@@ -7,48 +7,80 @@ const urlOptionConfigure = (url) => {
         url,
         headers: {
             'X-RapidAPI-Key': 'f4217d42admshde5ce9554a8b855p19eca8jsnb3dacff44411',
-            'X-RapidAPI-Host': 'myanimelist.p.rapidapi.com'
+            'X-RapidAPI-Host': 'anime-db.p.rapidapi.com'
         }
     };
     return options;
 }
 
-const showRandomAnime = async (req, res) => {
-
+const getAllAnime = async (req, res) => {
+    const url = "https://anime-db.p.rapidapi.com/anime";
+    const options = urlOptionConfigure(url);
+    const urlOptions =
+        {...options,
+            params: {
+                page: '1',
+                size: '30',
+                sortBy: 'ranking',
+                sortOrder: 'asc'
+            }};
+    const response = await axios.request(urlOptions);
+    res.json(response.data.data);
 }
 
-const searchAnime = async (req, res) => {
+const searchAnimeByTitle = async (req, res) => {
     const {animeTitle} = req.params;
-    const url = `https://myanimelist.p.rapidapi.com/search/${animeTitle}/10`;
+    const url = "https://anime-db.p.rapidapi.com/anime";
+    const options = urlOptionConfigure(url);
+    const urlOptions =
+        {...options,
+        params: {
+            page: '1',
+            size: '20',
+            search: animeTitle,
+            sortBy: 'ranking',
+            sortOrder: 'asc'
+        }};
+    const response = await axios.request(urlOptions);
+    res.json(response.data.data);
+}
+
+const getAllAnimeGenres = async (req, res) => {
+    const url = 'https://anime-db.p.rapidapi.com/genre';
     const urlOptions = urlOptionConfigure(url);
     const response = await axios.request(urlOptions);
     res.json(response.data);
 }
 
+const getAnimeByGenre = async (req, res) => {
+    const {genre} = req.params;
+    const url = "https://anime-db.p.rapidapi.com/anime";
+    const options = urlOptionConfigure(url);
+    const urlOptions =
+        {...options,
+            params: {
+                page: '1',
+                size: '20',
+                genres: genre,
+                sortBy: 'ranking',
+                sortOrder: 'asc'
+            }};
+    const response = await axios.request(urlOptions);
+    res.json(response.data.data);
+}
+
 const getAnimeDetails = async (req, res) => {
     const {animeId} = req.params;
-    const url = `https://myanimelist.p.rapidapi.com/anime/${animeId}`;
+    const url = `https://anime-db.p.rapidapi.com/anime/by-id/${animeId}`;
     const urlOptions = urlOptionConfigure(url);
     const response = await axios.request(urlOptions);
-    const data = response.data;
-    const detail = {
-        title: data.title_ov,
-        japaneseTitle: data.alternative_titles.japanese,
-        picture_url: data.picture_url,
-        genres: data.information.genres,
-        description: data.synopsis,
-        producers: data.information.producers,
-        studios: data.information.studios,
-        episodes: data.information.episodes,
-        status: data.information.status,
-        onlineScore: data.statistics.score,
-        characters: data.characters
-    }
-    res.json(detail);
+    res.json(response.data);
 }
 
 export default (app) => {
-    app.get('/api/anime/search/:animeTitle', searchAnime);
+    app.get('/api/anime/all', getAllAnime);
+    app.get('/api/anime/search/:animeTitle', searchAnimeByTitle);
+    app.get('/api/anime/genres', getAllAnimeGenres);
+    app.get('/api/anime/genres/:animeGenre', getAnimeByGenre);
     app.get('/api/anime/:animeId', getAnimeDetails);
 }
-

@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const schema = Schema({
     title: String,
-    picture_url: String,
-    description: String,
+    ranking: Number,
+    image: String,
+    thumb: String,
+    synopsis: String,
     username: String,
     anime_id: String,
     reviewed: Boolean,
