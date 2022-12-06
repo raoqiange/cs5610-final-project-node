@@ -1,12 +1,13 @@
 import * as collectedAnimeDao from './collected-anime-dao.js';
 import * as recentInteractedAnimeDao from '../anime/recentInteractedAnime/recent-interacted-anime-dao.js';
 
-// /api/collections/:collectionId/anime
+// /api/collections/:collectionId/anime?username=tom
 const findAllAnimeByCollectionId = async (req, res) => {
     const {collectionId} = req.params;
+    const {username} = req.query;
     const collectedAnimeList = await collectedAnimeDao.findAnimeIdsByCollectionId(collectionId);
     const animeIds = collectedAnimeList.map(anime => anime.anime_id)
-    const animeList = await recentInteractedAnimeDao.getAnimeByAnimeIds(animeIds);
+    const animeList = await recentInteractedAnimeDao.getAnimeByAnimeIdsAndUsername(animeIds, username);
     res.json(animeList);
 }
 

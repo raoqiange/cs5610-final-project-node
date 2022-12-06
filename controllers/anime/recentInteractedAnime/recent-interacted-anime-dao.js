@@ -31,5 +31,5 @@ export const removeRecentlyCollectedAnime = (recentlyInteractedAnime) =>
     recentInteractedAnimeModel.updateOne(recentlyInteractedAnime, {$set: {collected: false}});
 
 //used in collectedAnime controller to get anime by collectionId
-export const getAnimeByAnimeIds = (animeIds) =>
-    recentInteractedAnimeModel.find({anime_id: {$in: animeIds}, collected: true});
+export const getAnimeByAnimeIdsAndUsername = (animeIds, username) =>
+    recentInteractedAnimeModel.find({anime_id: {$in: animeIds}, collected: true, username});

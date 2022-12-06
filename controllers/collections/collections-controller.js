@@ -1,4 +1,5 @@
 import * as collectionsDao from './collections-dao.js';
+import {removeAllCollectedAnimeByCollectionId} from "../collectedAnime/collected-anime-dao.js";
 
 //url = '/api/collections/:collectionId' method:get
 const findCollectionByCollectionId = async (req, res) => {
@@ -9,13 +10,13 @@ const findCollectionByCollectionId = async (req, res) => {
     res.json(collection);
 }
 
-//url = '/api/collections' method:get
+//url = '/api/collections?username=tom' method:get
 const findCollectionsByFanUsername = async (req, res) => {
     // console.log(req.query)
     // const {fan_username} = req.query;
     // console.log(fan_username)
-    const {fan_username} = req.body;
-    const collections = await collectionsDao.findCollectionsByFanUsername(fan_username);
+    const {username} = req.query;
+    const collections = await collectionsDao.findCollectionsByFanUsername(username);
     res.json(collections);
 }
 
@@ -38,6 +39,7 @@ const updateCollection = async(req, res) => {
 // url = '/api/collections/:collectionId' method:delete
 const deleteCollection = async (req, res) => {
     const collectionIdToDelete = req.params.collectionId;
+    await removeAllCollectedAnimeByCollectionId(collectionIdToDelete);
     const status = await collectionsDao.deleteCollection(collectionIdToDelete);
     res.json(status);
 }

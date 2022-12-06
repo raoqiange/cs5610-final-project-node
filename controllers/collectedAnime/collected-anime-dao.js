@@ -6,4 +6,12 @@ export const findAnimeIdsByCollectionId = (collectionId) => collectedAnimeModel.
 
 export const createCollectedAnime = (collectedAnime) => collectedAnimeModel.create(collectedAnime);
 
+//remove one anime from collection
 export const removeCollectedAnime = (collectedAnimeId) => collectedAnimeModel.deleteOne({_id: collectedAnimeId});
+
+// export const removeAnimeFromCollection = (collectionId, animeId) =>
+//     collectedAnimeModel.deleteMany({collection_id: collectionId, anime_id: animeId})
+
+//remove all anime when a collection is deleted
+export const removeAllCollectedAnimeByCollectionId = (collectionId) =>
+    collectedAnimeModel.deleteMany({collection_id: collectionId})
