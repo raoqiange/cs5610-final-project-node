@@ -5,7 +5,11 @@ const findUserByUserId = async (req, res) => {
     const User = await usersDao.findUserByUserId(UserId);
     res.json(User);
 }
-
+const findPublicUserByUserId = async (req, res) => {
+    const {UserId} = req.params;
+    const user = await usersDao.findPublicUserByUserId(UserId)
+    res.json(user)
+}
 //url = '/api/users' method:get
 const findUsers = async (req, res) => {
     const users = await usersDao.findUsers();
@@ -50,14 +54,16 @@ const deleteUserByUserId = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const credential = req.body;
-    const existingUser = await usersDao.findUserByCredentials(credential.username, credential.password);
-    if(!existingUser) {
-        res.sendStatus(403);
+    const credentials = req.body
+    const existingUser = await usersDao
+        .findUserByCredentials(
+            credentials.username, credentials.password)
+    if(existingUser) {
+        req.session['currentUser'] = existingUser
+        res.json(existingUser)
         return
     }
-    req.session['currentUser'] = existingUser;
-    res.json(existingUser);
+    res.sendStatus(403)
 }
 
 const register = async (req, res) => {
@@ -73,12 +79,12 @@ const register = async (req, res) => {
     res.json(actualUser);
 }
 
-const profile = async (req, res) => {
-    if(req.session['currentUser']) {
-        res.json(req.session['currentUser']);
-        return
+const profile = (req, res) => {
+    if (req.session['currentUser']) {
+        res.send(req.session['currentUser'])
+    } else {
+        res.sendStatus(403)
     }
-    res.sendStatus(403)
 }
 
 const logout = async (req, res)=> {
@@ -90,6 +96,7 @@ const logout = async (req, res)=> {
 export default (app) => {
     app.post('/api/users', createUser);
     app.get('/api/users/:UserId', findUserByUserId);
+    app.get('/api/users/public/:UserId', findPublicUserByUserId);
     app.get('/api/users', findUsers)
     app.put('/api/users/:UserId', updateUser);
     app.delete('/api/users/:UserId', deleteUserByUserId);

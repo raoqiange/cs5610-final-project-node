@@ -7,6 +7,7 @@ export const findForumAuthors = () => usersModel.find({role: 'FORUM_AUTHOR'});
 export const findFans = () => usersModel.find({role: 'FAN'});
 
 export const findUserByUserId = (userId) => usersModel.findOne({_id: userId});
+export const findPublicUserByUserId = (userid) => usersModel.findOne({_id: userid}, {password:false})
 export const findUserByUsername = (username) => usersModel.findOne({username});
 export const findUserByCredentials = (username, password) => usersModel.findOne({username, password}, {password: false});
 
