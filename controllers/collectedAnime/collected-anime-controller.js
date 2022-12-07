@@ -21,7 +21,6 @@ const createCollectedAnime = async (req, res) => {
     const {username} = req.query;
     //check if already in collected anime
     const foundCollectedAnime = await collectedAnimeDao.findCollectedAnimeByCollectionIdAndAnimeId(collectionId, animeId);
-    console.log(foundCollectedAnime);
     if (foundCollectedAnime) {
         res.json({message: "Anime already in collection."})
         return;
