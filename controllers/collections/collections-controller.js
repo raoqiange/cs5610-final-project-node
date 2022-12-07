@@ -12,9 +12,6 @@ const findCollectionByCollectionId = async (req, res) => {
 
 //url = '/api/collections?username=tom' method:get
 const findCollectionsByFanUsername = async (req, res) => {
-    // console.log(req.query)
-    // const {fan_username} = req.query;
-    // console.log(fan_username)
     const {username} = req.query;
     const collections = await collectionsDao.findCollectionsByFanUsername(username);
     res.json(collections);

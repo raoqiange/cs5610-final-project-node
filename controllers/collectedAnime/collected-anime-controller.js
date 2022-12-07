@@ -19,6 +19,13 @@ const createCollectedAnime = async (req, res) => {
         anime_id: animeId
     }
     const {username} = req.query;
+    //check if already in collected anime
+    const foundCollectedAnime = await collectedAnimeDao.findCollectedAnimeByCollectionIdAndAnimeId(collectionId, animeId);
+    console.log(foundCollectedAnime);
+    if (foundCollectedAnime) {
+        res.json({message: "Anime already in collection."})
+        return;
+    }
     await collectedAnimeDao.createCollectedAnime(newCollectedAnime); //insert collectedAnime db entry
     const animeInDb = await recentInteractedAnimeDao.findRecentlyInteractedAnimeByFanNameAndAnimeId(username, animeId);
 
@@ -35,19 +42,20 @@ const createCollectedAnime = async (req, res) => {
     res.sendStatus(200) // return status indicating successful insertion
 }
 
-// /api/collectedAnime/:collectedAnimeId
+
+///api/collections/:collectionId/anime/:animeId
 const deleteCollectedAnime = async (req, res) => {
-    const {collectedAnimeId} = req.params;
+    const {collectionId, animeId} = req.params;
     const {username} = req.query;
-    const collectedAnime = await collectedAnimeDao.findCollectedAnimeByCollectedAnimeId(collectedAnimeId);
+    const collectedAnime = await collectedAnimeDao.findCollectedAnimeByCollectionIdAndAnimeId(collectionId, animeId);
     const animeInDb = await recentInteractedAnimeDao.findRecentlyInteractedAnimeByFanNameAndAnimeId(username, collectedAnime?.anime_id);
     await recentInteractedAnimeDao.removeRecentlyCollectedAnime(animeInDb);
-    const status = await collectedAnimeDao.removeCollectedAnime(collectedAnimeId);
+    const status = await collectedAnimeDao.removeCollectedAnime(collectionId, animeId);
     res.json(status)
 }
 
 export default (app) => {
     app.get('/api/collections/:collectionId/anime', findAllAnimeByCollectionId);
     app.post('/api/collections/:collectionId/anime/:animeId', createCollectedAnime);
-    app.delete('/api/collectedAnime/:collectedAnimeId', deleteCollectedAnime);
+    app.delete('/api/collections/:collectionId/anime/:animeId', deleteCollectedAnime);
 }
