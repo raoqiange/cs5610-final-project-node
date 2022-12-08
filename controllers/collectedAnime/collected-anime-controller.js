@@ -13,6 +13,7 @@ const findAllAnimeByCollectionId = async (req, res) => {
 
 // /api/collections/:collectionId/anime/:animeId
 const createCollectedAnime = async (req, res) => {
+
     const {collectionId, animeId} = req.params;
     const newCollectedAnime = {
         collection_id: collectionId,
@@ -38,7 +39,7 @@ const createCollectedAnime = async (req, res) => {
     } else {
         await recentInteractedAnimeDao.updateRecentlyCollectedAnime(animeInDb);
     }
-    res.sendStatus(200) // return status indicating successful insertion
+    res.json({message: "Anime added to Collection!"}) // return status indicating successful insertion
 }
 
 
