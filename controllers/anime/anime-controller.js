@@ -20,7 +20,7 @@ const getAllAnime = async (req, res) => {
         {...options,
             params: {
                 page: '1',
-                size: '30',
+                size: '60',
                 sortBy: 'ranking',
                 sortOrder: 'asc'
             }};
