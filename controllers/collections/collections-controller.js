@@ -35,6 +35,7 @@ const updateCollection = async(req, res) => {
 
 // url = '/api/collections/:collectionId' method:delete
 const deleteCollection = async (req, res) => {
+    console.log(req.params.collectionId);
     const collectionIdToDelete = req.params.collectionId;
     await removeAllCollectedAnimeByCollectionId(collectionIdToDelete);
     const status = await collectionsDao.deleteCollection(collectionIdToDelete);

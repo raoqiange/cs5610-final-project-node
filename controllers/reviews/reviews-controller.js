@@ -49,9 +49,14 @@ const deleteReview = async (req, res) => {
     const {reviewId} = req.params;
     const {username} = req.query;
     const review = await reviewsDao.findReviewByReviewId(reviewId);
-    const animeInDb = await recentInteractedAnimeDao.findRecentlyInteractedAnimeByFanNameAndAnimeId(username, review?.anime_id);
-    await recentInteractedAnimeDao.removeRecentlyReviewedAnime(animeInDb);
     const status = await reviewsDao.deleteReview(reviewId);
+    const reviewHistory = await reviewsDao.findReviewsByUsernameAndAnimeId(username, review?.anime_id);
+    // console.log(reviewHistory)
+    // console.log(reviewHistory && reviewHistory.length === 0);
+    if (reviewHistory && reviewHistory.length === 0) { //if user has other reviews for this anime, do not update review boolean
+        const animeInDb = await recentInteractedAnimeDao.findRecentlyInteractedAnimeByFanNameAndAnimeId(username, review?.anime_id);
+        await recentInteractedAnimeDao.removeRecentlyReviewedAnime(animeInDb);
+    }
     res.json(status)
 }
 
