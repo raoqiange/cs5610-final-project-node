@@ -5,9 +5,9 @@ const findUserByUserId = async (req, res) => {
     const User = await usersDao.findUserByUserId(UserId);
     res.json(User);
 }
-const findPublicUserByUserId = async (req, res) => {
-    const {UserId} = req.params;
-    const user = await usersDao.findPublicUserByUserId(UserId)
+const findPublicUserByUsername = async (req, res) => {
+    const {username} = req.params;
+    const user = await usersDao.findPublicUserByUsername(username)
     res.json(user)
 }
 //url = '/api/users' method:get
@@ -42,7 +42,13 @@ const createUser = async (req, res) => {
 const updateUser = async(req, res) => {
     const UserIdToUpdate = req.params.UserId;
     const updates = req.body;
+    console.log(updates)
     const status = await usersDao.updateUser(UserIdToUpdate, updates);
+    const existingUser = await usersDao
+        .findUserByCredentials(
+            updates.username, updates.password)
+    req.session['currentUser'] = existingUser;
+    console.log(status)
     res.json(status);
 }
 
@@ -63,6 +69,7 @@ const login = async (req, res) => {
         res.json(existingUser)
         return
     }
+    console.log("login failed")
     res.sendStatus(403)
 }
 
@@ -96,7 +103,7 @@ const logout = async (req, res)=> {
 export default (app) => {
     app.post('/api/users', createUser);
     app.get('/api/users/:UserId', findUserByUserId);
-    app.get('/api/users/public/:UserId', findPublicUserByUserId);
+    app.get('/api/users/public/:username', findPublicUserByUsername);
     app.get('/api/users', findUsers)
     app.put('/api/users/:UserId', updateUser);
     app.delete('/api/users/:UserId', deleteUserByUserId);
