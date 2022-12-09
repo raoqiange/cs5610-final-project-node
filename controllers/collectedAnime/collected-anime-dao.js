@@ -1,7 +1,5 @@
 import collectedAnimeModel from "./collected-anime-model.js";
 
-export const findCollectedAnimeByCollectedAnimeId = (collectedAnimeId) => collectedAnimeModel.findById(collectedAnimeId);
-
 export const findCollectedAnimeByCollectionIdAndAnimeId = (collectionId, animeId) =>
     collectedAnimeModel.findOne({collection_id: collectionId, anime_id: animeId});
 

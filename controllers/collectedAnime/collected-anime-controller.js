@@ -47,10 +47,13 @@ const createCollectedAnime = async (req, res) => {
 const deleteCollectedAnime = async (req, res) => {
     const {collectionId, animeId} = req.params;
     const {username} = req.query;
+    const status = await collectedAnimeDao.removeCollectedAnime(collectionId, animeId);
+
     const collectedAnime = await collectedAnimeDao.findCollectedAnimeByCollectionIdAndAnimeId(collectionId, animeId);
+    console.log(collectedAnime)
     const animeInDb = await recentInteractedAnimeDao.findRecentlyInteractedAnimeByFanNameAndAnimeId(username, collectedAnime?.anime_id);
     await recentInteractedAnimeDao.removeRecentlyCollectedAnime(animeInDb);
-    const status = await collectedAnimeDao.removeCollectedAnime(collectionId, animeId);
+
     res.json(status)
 }
 
