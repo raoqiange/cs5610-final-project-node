@@ -22,7 +22,7 @@ const options = {
     socketTimeoutMS: 45000,
     family: 4
 }
-const CONNECTION_STRING = 'mongodb://localhost:27017/final-project-5610';
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING ||'mongodb://localhost:27017/final-project-5610';
 mongoose.connect(CONNECTION_STRING, options);
 
 
